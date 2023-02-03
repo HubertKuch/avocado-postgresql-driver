@@ -1,5 +1,5 @@
 {
-  "name": "hubert/avocado-mysql-driver",
+  "name": "hubert/avocado-postgres-driver",
   "type": "library",
   "description": "PostgreSQL driver implementation for Avocado",
   "require": {
