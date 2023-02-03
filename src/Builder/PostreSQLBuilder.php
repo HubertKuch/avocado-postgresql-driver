@@ -8,7 +8,7 @@ use Avocado\DataSource\Builder\SQLBuilder;
 
 class PostreSQLBuilder implements SQLBuilder {
 
-    public function __construct(private string $sql) {}
+    public function __construct(private string $sql = "") {}
 
     public static function find(string $tableName, array $criteria, ?array $special): Builder {
         return new PostreSQLBuilder("SELECT * FROM $tableName" . self::buildWhereCriteria($criteria));
