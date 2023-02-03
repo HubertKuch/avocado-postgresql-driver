@@ -1,6 +1,7 @@
 {
   "name": "hubert/avocado-mysql-driver",
   "type": "library",
+  "description": "PostgreSQL driver implementation for Avocado",
   "require": {
     "hubert/avocado": "dev-main",
     "ext-pdo": "*",
