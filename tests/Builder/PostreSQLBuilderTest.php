@@ -1,8 +1,9 @@
 <?php
 
-namespace Hubert\PostgreSQLDriver\Builder;
+namespace Hubert\PostgreSQLDriver\Tests\Builder;
 
 use Avocado\AvocadoORM\Order;
+use Hubert\PostgreSQLDriver\Builder\PostreSQLBuilder;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

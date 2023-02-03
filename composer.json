@@ -16,6 +16,12 @@
       "Hubert\\PostgreSQLDriver\\": "src/"
     }
   },
+  "autoload-dev": {
+    "classmap": ["src", "tests"],
+    "psr-4": {
+      "Hubert\\PostgreSQLDriver\\Tests\\": "tests/"
+    }
+  },
   "license": "Apache-2.0",
   "authors": [
     {
