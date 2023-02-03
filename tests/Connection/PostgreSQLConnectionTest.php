@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 
 class PostgreSQLConnectionTest extends TestCase {
 
-    private function getMockedConnection(): Connection {
+    private function getConnection(): Connection {
         $pdo = new PDO("pgsql:host=127.0.0.1;port=5432;dbname=testdb;user=postgres;password=test;options='-c client_encoding=utf8'");
 
         return new PostgreSQLConnection($pdo);
     }
 
     public function testQueryBuilder() {
-        self::assertNotNull($this->getMockedConnection()->queryBuilder());
+        self::assertNotNull($this->getConnection()->queryBuilder());
     }
 
     public function testMapper() {
-        self::assertNotNull($this->getMockedConnection()->mapper());
+        self::assertNotNull($this->getConnection()->mapper());
     }
 
     public function testPrepare() {
-        self::assertNotNull($this->getMockedConnection()->prepare("SELECT * FROM cities"));
+        self::assertNotNull($this->getConnection()->prepare("SELECT * FROM cities"));
     }
 }
