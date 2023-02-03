@@ -1,0 +1,7 @@
+---
+avocado:
+  router:
+    matchingStrategy: SELF
+  environment:
+    type: DEVELOPMENT
+    throws: false
