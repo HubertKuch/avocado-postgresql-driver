@@ -10,20 +10,23 @@ class PostreSQLBuilder implements SQLBuilder {
 
     public function __construct(private string $sql = "") {}
 
-    public static function find(string $tableName, array $criteria, ?array $special): Builder {
+    public static function find(string $tableName, array $criteria = [], ?array $special = []): Builder {
         return new PostreSQLBuilder("SELECT * FROM $tableName" . self::buildWhereCriteria($criteria));
     }
 
-    public static function update(string $tableName, array $updateCriteria, array $findCriteria): Builder {
-        return new PostreSQLBuilder("UPDATE $tableName" . self::buildUpdateCriteria($updateCriteria));
+    public static function update(string $tableName, array $updateCriteria = [], array $findCriteria = []): Builder {
+        return new PostreSQLBuilder("UPDATE $tableName" . self::buildUpdateCriteria($updateCriteria) . self::buildWhereCriteria($findCriteria));
     }
 
-    public static function delete(string $tableName, array $criteria): Builder {
+    public static function delete(string $tableName, array $criteria = []): Builder {
         return new PostreSQLBuilder("DELETE FROM $tableName" . self::buildWhereCriteria($criteria));
     }
 
     public static function save(string $tableName, object $object): Builder {
-        return new PostreSQLBuilder("INSERT INTO");
+        $vars = get_object_vars($object);
+        $asc = (array) $object;
+
+        return new PostreSQLBuilder("INSERT INTO $tableName" . self::arrayToInsertColumns($asc) . " VALUES " . self::arrayToInsertValues($asc));
     }
 
     public function limit(int $limit): Builder {
@@ -49,7 +52,7 @@ class PostreSQLBuilder implements SQLBuilder {
     }
 
     private static function buildWhereCriteria(array $criteria): string {
-        $sql = empty($criteria) ? "" : "WHERE ";
+        $sql = empty($criteria) ? "" : " WHERE ";
 
         foreach ($criteria as $key => $value) {
             $sql .= " $key ";
@@ -74,5 +77,35 @@ class PostreSQLBuilder implements SQLBuilder {
         }
 
         return rtrim($sql, ',');
+    }
+
+    private static function arrayToInsertValues(array $array): string {
+        $str = "(";
+
+        foreach ($array as $key => $val) {
+            if (is_null($val)) {
+                $str .= "NULL,";
+                continue;
+            } else if (is_string($val)) {
+                $str .= "'$val',";
+                continue;
+            } else {
+                $str .= "$val,";
+            }
+        }
+
+        return rtrim($str, ",") . ")";
+    }
+
+    private static function arrayToInsertColumns(array $array): string {
+        $str = "(";
+
+        var_dump($array);
+
+        foreach ($array as $key => $value) {
+            $str .= "$key,";
+        }
+
+        return rtrim($str, ",") . ")";
     }
 }
